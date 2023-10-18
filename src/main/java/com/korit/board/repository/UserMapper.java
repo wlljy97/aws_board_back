@@ -8,4 +8,5 @@ public interface UserMapper { // mapper는 interface로 받아야 한다.
 
     public int saveUser(User user);
     public int checkDuplicate(User user);
+    public User findUserByEmail(String email);
 }

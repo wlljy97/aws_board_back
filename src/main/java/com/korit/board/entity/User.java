@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 // 필수 어노테이션
 @Builder
 @Data
-
 @AllArgsConstructor
 @NoArgsConstructor
 public class User {
