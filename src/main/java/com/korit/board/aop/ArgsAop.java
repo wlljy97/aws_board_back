@@ -22,8 +22,9 @@ public class ArgsAop {
 
         String className = codeSignature.getDeclaringTypeName(); // class명
         String methodName = codeSignature.getName(); // method명
-        String[] argNames = codeSignature.getParameterNames();
-        Object[] args = proceedingJoinPoint.getArgs();
+
+        String[] argNames = codeSignature.getParameterNames(); // 메소드의 파라미터 이름을 가져옴
+        Object[] args = proceedingJoinPoint.getArgs(); // 메소드 호출시 전달된 인자를 가져옴
 
         System.out.println("======================================================================");
         System.out.println("클래스명: " + className + ", 메소드명: " + methodName);
