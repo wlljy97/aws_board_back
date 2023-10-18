@@ -49,7 +49,6 @@ public class AuthController {
     @GetMapping("/auth/token/authenticate")
     public ResponseEntity<?> authenticate(@RequestHeader(value = "Authorization") String token) {
 
-
         return ResponseEntity.ok(true);
     }
 
