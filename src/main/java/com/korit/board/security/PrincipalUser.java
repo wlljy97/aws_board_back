@@ -8,7 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 
 @Getter
-public class PrincipalUser implements UserDetails {
+public class PrincipalUser implements UserDetails { // PrincipalUser 은 User를 가진다.
 
     private User user;
 

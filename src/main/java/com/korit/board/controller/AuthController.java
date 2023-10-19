@@ -7,6 +7,7 @@ import com.korit.board.aop.annotation.ValidAop;
 import com.korit.board.dto.SigninReqDto;
 import com.korit.board.dto.SignupReqDto;
 import com.korit.board.exception.ValidException;
+import com.korit.board.service.AccountService;
 import com.korit.board.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +23,7 @@ import java.util.Map;
 public class AuthController {
 
     private final AuthService authService;
+    private final AccountService accountController;
 
 //    @ReturnAop
 //    @TimeAop
@@ -50,6 +52,12 @@ public class AuthController {
     public ResponseEntity<?> authenticate(@RequestHeader(value = "Authorization") String token) {
 
         return ResponseEntity.ok(true);
+    }
+
+    @GetMapping("/auth/mail") // auth로 시작해서 토큰인증 하지않음
+    public ResponseEntity<?> authenticateMail(String token) { // token이 유효한지 확인
+
+        return ResponseEntity.ok(accountController.authenticateMail(token) ? "인증이 완료되었습니다." : "인증 실패");
     }
 
 }

@@ -32,17 +32,15 @@ public class JwtProvider {
 
     public String generateToken(Authentication authentication) {
         String email = authentication.getName();
-        PrincipalUser principalUser = (PrincipalUser) authentication.getPrincipal();
 
         Date date = new Date(new Date().getTime() + (1000 * 60 * 60 * 24));
 
 
-        // Jwt 토큰을 return
+        // Jwt 토큰을 return / 토큰을 만듬
         return Jwts.builder()
                 .setSubject("AccessToken")
                 .setExpiration(date) // 토큰의 만료기간
                 .claim("email", email)
-                .claim("isEnabled", principalUser.isEnabled()) // true 인지 false 인지 토큰이 가지고 있음
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
     }
@@ -69,7 +67,7 @@ public class JwtProvider {
     }
 
     public Authentication getAuthentication(String token) {
-        Claims claims = getClaims(token);
+        Claims claims = getClaims(token); // null이면 토큰이 유효하지 않다.
         if(claims == null) {
             return null;
         }
@@ -81,5 +79,16 @@ public class JwtProvider {
 
         PrincipalUser principalUser = new PrincipalUser(user);
         return new UsernamePasswordAuthenticationToken(principalUser, null, principalUser.getAuthorities());
+    }
+
+    public String generateAuthMailToken(String email) {
+        Date date = new Date(new Date().getTime() + 1000 * 60 * 5); // 인증을 할 수 있는데 까지의 시간은 5분
+
+        return Jwts.builder()
+                .setSubject("AuthenticationEmailToken")
+                .setExpiration(date)
+                .claim("email", email)
+                .signWith(key, SignatureAlgorithm.HS256)
+                .compact();
     }
 }

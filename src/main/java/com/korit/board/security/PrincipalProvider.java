@@ -14,13 +14,13 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class PrincipalProvider implements AuthenticationProvider {
+public class PrincipalProvider implements AuthenticationProvider { // AuthenticationProvider imple 시키면 밑의 것을 구현할 수 있다.
 
     private final PrincipalUserDetailsService principalUserDetailsService;
     private final BCryptPasswordEncoder passwordEncoder;
 
     @Override
-    public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+    public Authentication authenticate(Authentication authentication) throws AuthenticationException { //(Authentication authentication) 업캐스팅 해서 들고온다. // 업캐스팅 되서 예외가 늦어진다.
         String email = authentication.getName(); // 여기서 getName 이 email
         String password = (String) authentication.getCredentials(); //  여기서 getCredentials 이 password
 

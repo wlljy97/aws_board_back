@@ -33,9 +33,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/auth/**")
                 .permitAll()  // "/auth/**" 이주소(/auth)로 시작하는(오는)것을 무조건 다 통과 시킴
                 .anyRequest()
-                .authenticated()
+                .authenticated() // 없으면 인증이 안된다.
                 .and()
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class) // 여기서 인증을 걸친다. 인증이 안되면 PrincipalEntryPoint로 가서 예외처리를 한다.
                 .exceptionHandling()
                 .authenticationEntryPoint(principalEntryPoint);
     }
