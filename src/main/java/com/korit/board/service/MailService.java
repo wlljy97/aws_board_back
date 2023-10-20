@@ -20,7 +20,7 @@ public class MailService {
 
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
         try {
-            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, false, "utf-8"); // MimeMessageHelper <- 생성 할려면 예외처리가 필요
+            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, false, "utf-8"); // MimeMessageHelper <- 객체생성 할려면 예외처리가 필요
             helper.setSubject("스프링 부트 사용자 인증 메일 테스트");
             helper.setFrom("jw7812@gmail.com"); // 관리자 이메일
             helper.setTo(toEmail); // 해당 사용자 이메일

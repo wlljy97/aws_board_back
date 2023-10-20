@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.korit.board.aop.annotation.TimeAop;
 import com.korit.board.exception.AuthMailException;
 import com.korit.board.exception.DuplicateException;
+import com.korit.board.exception.MismatchedPasswordException;
 import com.korit.board.exception.ValidException;
 import io.jsonwebtoken.JwtException;
 import org.springframework.http.HttpStatus;
@@ -61,6 +62,13 @@ public class ExceptionControllerAdvice {
         Map<String, String> message = new HashMap<>();
         message.put("authMail", MailException.getMessage()); // 생성해놓은 메세지가 응답할것임
         return ResponseEntity.ok().body(message); // ok를 안주면 오류페이지를 나타냄
+    }
+
+    @ExceptionHandler(MismatchedPasswordException.class)
+    public ResponseEntity<?> mismatchedPasswordException(MismatchedPasswordException mismatchedPasswordException) {
+        Map<String, String> message = new HashMap<>();
+        message.put("mismatched", mismatchedPasswordException.getMessage());
+        return ResponseEntity.badRequest().body(message); // badRequest 요청 자체가 잘못된것
     }
 
 }

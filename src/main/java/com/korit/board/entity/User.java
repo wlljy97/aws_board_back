@@ -19,6 +19,7 @@ public class User {
     private String name;
     private String nickname;
     private int enabled;
+    private String profileUrl;
 
     public PrincipalReqDto principalReqDto() {
         return PrincipalReqDto.builder()
@@ -27,6 +28,7 @@ public class User {
                 .name(name)
                 .nickname(nickname)
                 .enabled(enabled > 0)
+                .profileUrl(profileUrl)
                 .build();
     }
 }

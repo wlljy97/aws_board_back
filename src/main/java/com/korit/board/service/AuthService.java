@@ -35,15 +35,15 @@ public class AuthService {
     public boolean signup(SignupReqDto signupReqDto) {
         User user = signupReqDto.toUser(passwordEncoder);
 
-        int errorCode = userMapper.checkDuplicate(user);
+        int errorCode = userMapper.checkDuplicate(user); //  사용자의 이메일과 닉네임 중복 검사를 수행
         if(errorCode > 0) {
-            responseDuplicateError(errorCode);
+            responseDuplicateError(errorCode); //중복 오류 응답을 생성
         }
 
-        return userMapper.saveUser(user) > 0;
+        return userMapper.saveUser(user) > 0; // 중복이 없는 경우 userMapper.saveUser(user)를 호출하여 사용자를 데이터베이스에 저장
     }
 
-    private void responseDuplicateError(int errorCode) {
+    private void responseDuplicateError(int errorCode) { // 중복 에러 처리
         Map<String, String> errorMap = new HashMap<>();
         switch (errorCode) {
             case 1:
@@ -66,12 +66,12 @@ public class AuthService {
         UsernamePasswordAuthenticationToken authenticationToken = // authentication 업캐스팅이 가능하다.
                 new UsernamePasswordAuthenticationToken(signinReqDto.getEmail(), signinReqDto.getPassword());
 
-        Authentication authentication = principalProvider.authenticate(authenticationToken); // 이 과정을 거치면 return이 authentication
-
+        Authentication authentication = principalProvider.authenticate(authenticationToken); // principalProvider.authenticate 메소드를 사용하여 인증 수행
+        // 성공적으로 인증된 경우, jwtProvider.generateToken을 사용하여 JWT 토큰을 생성하고 반환
         return jwtProvider.generateToken(authentication);
     }
 
-    public boolean authenticate(String token) {
+    public boolean authenticate(String token) { // authenticate 메서드는 JWT 토큰을 검증하여 사용자 인증을 확인
         Claims claims = jwtProvider.getClaims(token);
         if(claims == null) {
             throw new JwtException("인증 토큰 유효성 검사 실패");

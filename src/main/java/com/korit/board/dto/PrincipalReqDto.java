@@ -11,4 +11,5 @@ public class PrincipalReqDto { // 마이페이지에 필요한 것들
     private String name;
     private String nickname;
     private boolean enabled;
+    private String profileUrl;
 }

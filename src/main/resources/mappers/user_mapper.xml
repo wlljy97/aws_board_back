@@ -6,18 +6,20 @@
 
     <resultMap  id="userMap"        type="com.korit.board.entity.User">
 
-        <id     property="userId"   column="user_id" />
-        <result property="email"    column="email" />
-        <result property="password" column="password" />
-        <result property="name"     column="name" />
-        <result property="nickname" column="nickname" />
-        <result property="enabled"  column="enabled" />
+        <id     property="userId"       column="user_id" />
+        <result property="email"        column="email" />
+        <result property="password"     column="password" />
+        <result property="name"         column="name" />
+        <result property="nickname"     column="nickname" />
+        <result property="enabled"      column="enabled" />
+        <result property="profileUrl"   column="profile_url" />
 
     </resultMap>
 
 
     <insert id="saveUser" parameterType="com.korit.board.entity.User">
-        insert into user_tb
+        insert into user_tb(user_id, email, password, name, nickname, enabled)
+<!--    default 값이면 알아서 채운다    -->
         values(0, #{email}, #{password}, #{name}, #{nickname}, 0)
     </insert>
 
@@ -28,6 +30,20 @@
         where
             email = #{email}
 <!--  인증이 되면 1이 된다.      -->
+    </update>
+    <update id="updateProfileUrl">
+        update user_tb
+        set
+            profile_url = #{profileUrl}
+        where
+            email = #{email}
+    </update>
+    <update id="updatePassword" parameterType="com.korit.board.entity.User">
+        update user_tb
+        set
+            password = #{password}
+        where
+            email = #{email}
     </update>
 
     <select id="checkDuplicate"
@@ -59,7 +75,8 @@
             password,
             name,
             nickname,
-            enabled
+            enabled,
+            profile_url
         from
             user_tb
         where
