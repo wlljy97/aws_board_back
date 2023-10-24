@@ -29,6 +29,11 @@ public class ExceptionControllerAdvice {
         return ResponseEntity.badRequest().body(validException.getErrorMap());
     }
 
+    @ExceptionHandler(DuplicateException.class)
+    public ResponseEntity<?> duplicateException(DuplicateException duplicateException) {
+        return ResponseEntity.badRequest().body(duplicateException.getErrorMap());
+    }
+
     @ExceptionHandler(UsernameNotFoundException.class)
     public ResponseEntity<?> usernameNotFoundException(UsernameNotFoundException usernameNotFoundException) {
         Map<String, String> message = new HashMap<>();

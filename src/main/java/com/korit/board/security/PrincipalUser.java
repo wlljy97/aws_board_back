@@ -4,12 +4,11 @@ import com.korit.board.entity.User;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import java.util.Collection;
 
-@Getter
-public class PrincipalUser implements UserDetails { // PrincipalUser 은 User를 가진다.
+public class PrincipalUser implements UserDetails {
 
+    @Getter
     private User user;
 
     public PrincipalUser(User user) {
@@ -48,6 +47,7 @@ public class PrincipalUser implements UserDetails { // PrincipalUser 은 User를
 
     @Override
     public boolean isEnabled() {
-        return user.getEnabled() > 0; // 계정 비활성화
+        return user.getEnabled() > 0;
     }
+
 }

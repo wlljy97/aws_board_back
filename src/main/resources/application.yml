@@ -1,4 +1,41 @@
 spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          kakao:
+            clientId: a9e7518eeff7e945792ce6a34dbe92f2 # REST API KEY
+#            clientSecret: 791a5c103497237a1f1ce102939c73df # ADMIN KEY
+            redirectUri: http://localhost:8080/login/oauth2/code/kakao # oauth를 쓸 때 정해져 있는 redirectUri
+            authorizationGrantType: authorization_code
+            clientAuthenticationMethod: POST
+            clientName: Kakao # 첫글자 대문자 필수!
+#            scope: # 들고 올 정보가 무엇,무엇 인가
+#              - profile
+#              - account_email
+          naver:
+            clientId: FN3qh0fPqmhBlyTg_DQw
+            clientSecret: uC503ojMPE
+            redirectUri: http://localhost:8080/login/oauth2/code/naver # oauth를 쓸 때 정해져 있는 redirectUri
+            authorizationGrantType: authorization_code
+            clientAuthenticationMethod: POST
+            clientName: Naver # 첫글자 대문자 필수!
+
+# 국내기업만 provider를 한다. 해외기업은 안해도됨
+        provider:
+          kakao:
+            authorizationUri: https://kauth.kakao.com/oauth/authorize   # 인가 보내기
+            tokenUri: https://kauth.kakao.com/oauth/token # 토큰
+            userInfoUri: https://kapi.kakao.com/v2/user/me # 사용자 정보 요청
+            userNameAttribute: id # 식별자 코드네임이 id 이다.
+
+          naver:
+            authorizationUri: https://nid.naver.com/oauth2.0/authorize   # 인가
+            tokenUri: https://nid.naver.com/oauth2.0/token # 토큰 요청
+            userInfoUri: https://openapi.naver.com/v1/nid/me # 사용자 정보(프로필) 요청
+            userNameAttribute: response # response가 key값
+
+
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://db1.ch05n6zoqi3e.ap-northeast-2.rds.amazonaws.com:3306/board

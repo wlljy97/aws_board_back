@@ -20,6 +20,9 @@ public class User {
     private String nickname;
     private int enabled;
     private String profileUrl;
+    private String oauth2Id;
+    private String provider;
+
 
     public PrincipalReqDto principalReqDto() {
         return PrincipalReqDto.builder()
@@ -29,6 +32,8 @@ public class User {
                 .nickname(nickname)
                 .enabled(enabled > 0)
                 .profileUrl(profileUrl)
+                .oauth2Id(oauth2Id)
+                .provider(provider)
                 .build();
     }
 }

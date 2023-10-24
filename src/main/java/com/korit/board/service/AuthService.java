@@ -1,9 +1,11 @@
 package com.korit.board.service;
 
+import com.korit.board.dto.MergeOauth2ReqDto;
 import com.korit.board.dto.SigninReqDto;
 import com.korit.board.dto.SignupReqDto;
 import com.korit.board.entity.User;
 import com.korit.board.exception.DuplicateException;
+import com.korit.board.exception.MismatchedPasswordException;
 import com.korit.board.jwt.JwtProvider;
 import com.korit.board.repository.UserMapper;
 import com.korit.board.security.PrincipalProvider;
@@ -18,6 +20,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -33,7 +36,7 @@ public class AuthService {
     private final JwtProvider jwtProvider;
 
     public boolean signup(SignupReqDto signupReqDto) {
-        User user = signupReqDto.toUser(passwordEncoder);
+        User user = signupReqDto.toUserEntity(passwordEncoder);
 
         int errorCode = userMapper.checkDuplicate(user); //  사용자의 이메일과 닉네임 중복 검사를 수행
         if(errorCode > 0) {
@@ -76,7 +79,18 @@ public class AuthService {
         if(claims == null) {
             throw new JwtException("인증 토큰 유효성 검사 실패");
         }
-        return  Boolean.parseBoolean(claims.get("enabled").toString());
+        return Boolean.parseBoolean(claims.get("enabled").toString());
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public boolean mergeOauth2(MergeOauth2ReqDto mergeOauth2ReqDto) {
+        User user = userMapper.findUserByEmail(mergeOauth2ReqDto.getEmail()); // 이 단계 까지 오면 email이 인증 되었다는 것
+
+        if(!passwordEncoder.matches(mergeOauth2ReqDto.getPassword(), user.getPassword())) {
+            throw new BadCredentialsException("BadCredentials");
+        }
+
+        return userMapper.updateOauth2IdAndProvider(mergeOauth2ReqDto.toUserEntity()) > 0;
     }
 }
 

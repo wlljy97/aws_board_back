@@ -13,6 +13,8 @@
         <result property="nickname"     column="nickname" />
         <result property="enabled"      column="enabled" />
         <result property="profileUrl"   column="profile_url" />
+        <result property="oauth2Id"     column="oauth2_id" />
+        <result property="provider"     column="provider" />
 
     </resultMap>
 
@@ -20,10 +22,21 @@
     <insert id="saveUser" parameterType="com.korit.board.entity.User">
         insert into user_tb(user_id, email, password, name, nickname, enabled)
 <!--    default 값이면 알아서 채운다    -->
-        values(0, #{email}, #{password}, #{name}, #{nickname}, 0)
+        values(0, #{email}, #{password}, #{name}, #{nickname}, 0,
+        <choose>
+            <when test='profileUrl==null or profileUrl.equals("")'>
+                default,
+            </when>
+            <otherwise>
+                #{profileUrl},
+            </otherwise>
+        </choose>
+        #{oauth2Id},
+        #{provider}
+        )
     </insert>
 
-    <update id="updateEnabledToEmail">
+    <update id="updateEnabledToEmail" >
         update user_tb
         set
             enabled = 1
@@ -31,7 +44,7 @@
             email = #{email}
 <!--  인증이 되면 1이 된다.      -->
     </update>
-    <update id="updateProfileUrl">
+    <update id="updateProfileUrl" parameterType="com.korit.board.entity.User">
         update user_tb
         set
             profile_url = #{profileUrl}
@@ -42,6 +55,14 @@
         update user_tb
         set
             password = #{password}
+        where
+            email = #{email}
+    </update>
+    <update id="updateOauth2IdAndProvider" parameterType="com.korit.board.entity.User">
+        update user_tb
+        set
+            oauth2_id = #{oauth2Id},
+            provider = #{provider}
         where
             email = #{email}
     </update>
@@ -76,11 +97,29 @@
             name,
             nickname,
             enabled,
-            profile_url
+            profile_url,
+            oauth2_id,
+            provider
         from
             user_tb
         where
             email = #{email}
 
+    </select>
+    <select id="findUserByOauth2Id" resultType="com.korit.board.entity.User">
+        select
+        user_id,
+        email,
+        password,
+        name,
+        nickname,
+        enabled,
+        profile_url,
+        oauth2_id,
+        provider
+        from
+        user_tb
+        where
+        oauth2_id = #{oauth2Id}
     </select>
 </mapper>

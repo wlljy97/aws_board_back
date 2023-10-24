@@ -28,13 +28,20 @@ public class SignupReqDto {
     @NotBlank
     private String nickname;
 
-    public User toUser(BCryptPasswordEncoder passwordEncoder) { // 암호화를 위해서 객체를 생성
+    private String oauth2Id;
+    private String profileImg;
+    private String provider;
+
+    public User toUserEntity(BCryptPasswordEncoder passwordEncoder) { // 암호화를 위해서 객체를 생성
 
         return User.builder()
                 .email(email)
                 .password(passwordEncoder.encode(password)) // 암호화를 하기위해서 encode를 써줌
                 .name(name)
                 .nickname(nickname)
+                .oauth2Id(oauth2Id)
+                .provider(provider)
+                .profileUrl(profileImg)
                 .build();
     }
 

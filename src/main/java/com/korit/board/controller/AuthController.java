@@ -4,6 +4,7 @@ import com.korit.board.aop.annotation.ArgsAop;
 import com.korit.board.aop.annotation.ReturnAop;
 import com.korit.board.aop.annotation.TimeAop;
 import com.korit.board.aop.annotation.ValidAop;
+import com.korit.board.dto.MergeOauth2ReqDto;
 import com.korit.board.dto.SigninReqDto;
 import com.korit.board.dto.SignupReqDto;
 
@@ -58,4 +59,11 @@ public class AuthController {
         return ResponseEntity.ok(accountController.authenticateMail(token) ? "인증이 완료되었습니다." : "인증 실패");
     }
 
+    @ValidAop
+    @PutMapping("/auth/oauth2/merge")
+    public ResponseEntity<?> oauth2Merge(@Valid @RequestBody MergeOauth2ReqDto mergeOauth2ReqDto, BindingResult bindingResult) {
+
+        return ResponseEntity.ok(authService.mergeOauth2(mergeOauth2ReqDto));
+
+    }
 }
