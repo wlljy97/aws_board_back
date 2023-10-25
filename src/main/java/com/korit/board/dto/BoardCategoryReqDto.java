@@ -8,4 +8,5 @@ import lombok.Data;
 public class BoardCategoryReqDto {
     private int boardCategoryId;
     private String boardCategoryName;
+    private int boardCount;
 }

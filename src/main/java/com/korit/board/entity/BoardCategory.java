@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 public class BoardCategory {
     private int boardCategoryId;
     private String boardCategoryName;
+    private int boardCount;
 
     public BoardCategoryReqDto toCategoryDto() {
         return BoardCategoryReqDto.builder()
