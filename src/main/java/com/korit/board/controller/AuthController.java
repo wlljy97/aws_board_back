@@ -29,7 +29,6 @@ public class AuthController {
 
     @ArgsAop
     @ValidAop
-
     @PostMapping("/auth/signup")
     public ResponseEntity<?> signup(
             @Valid @RequestBody SignupReqDto signupReqDto, // HTTP 요청의 본문(JSON)을 SignupReqDto 객체로 역직렬화하고, @Valid 어노테이션을 사용하여 유효성 검사를 수행

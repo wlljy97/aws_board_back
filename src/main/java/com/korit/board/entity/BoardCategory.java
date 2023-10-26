@@ -20,6 +20,7 @@ public class BoardCategory {
         return BoardCategoryReqDto.builder()
                 .boardCategoryId(boardCategoryId)
                 .boardCategoryName(boardCategoryName)
+                .boardCount(boardCount)
                 .build();
 
     }

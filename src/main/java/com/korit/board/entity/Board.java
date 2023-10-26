@@ -1,6 +1,7 @@
 package com.korit.board.entity;
 
 import com.korit.board.dto.BoardListReqDto;
+import com.korit.board.dto.GetBoardRespDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -8,6 +9,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 
 @Builder
 @NoArgsConstructor
@@ -35,4 +37,17 @@ public class Board {
                 .build();
     }
 
+    public GetBoardRespDto toBoardDto() {
+        return GetBoardRespDto.builder()
+                .boardId(boardId)
+                .boardTitle(boardTitle)
+                .boardContent(boardContent)
+                .boardCategoryId(boardCategoryId)
+                .email(email)
+                .nickname(nickname)
+                .createDate(createDate.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL))) // ofLocalizedDate 나라별날짜 표기법으로 바꿔줌 LONG을 쓰면 요일 생략, FULL은 요일 나타냄
+                .boardHitsCount(boardHitsCount)
+                .boardLikeCount(getBoardLikeCount())
+                .build();
+    }
 }

@@ -45,4 +45,32 @@ public class BoardController {
 
         return ResponseEntity.ok(boardService.getBoardList(categoryName, page, searchBoardListReqDto));
     }
+
+    @GetMapping("/boards/{categoryName}/count")
+    public ResponseEntity<?> getBoardCount(
+            @PathVariable String categoryName,
+            SearchBoardListReqDto searchBoardListReqDto) { // searchBoardListReqDto 검색 데이터가 들어가 있음;
+
+        return ResponseEntity.ok(boardService.getBoardCount(categoryName, searchBoardListReqDto));
+    }
+
+    @GetMapping("/board/{boardId}")
+    public ResponseEntity<?> getBoard(@PathVariable int boardId) {
+        return ResponseEntity.ok(boardService.getBoard(boardId));
+    }
+
+    @GetMapping("/board/like/{boardId}") // 이 게시글에 대한 like상태를 가지고 오는 것이이 Id가 필요
+    public ResponseEntity<?> getLikeState(@PathVariable int boardId) {
+        return ResponseEntity.ok(boardService.getLikeState(boardId));
+    }
+
+    @PostMapping("/board/like/{boardId}") // 이 게시글에 대한 like상태를 가지고 오는 것이이 Id가 필요
+    public ResponseEntity<?> setLike(@PathVariable int boardId) {
+        return ResponseEntity.ok(boardService.setLike(boardId));
+    }
+
+    @DeleteMapping("/board/like/{boardId}") // 이 게시글에 대한 like상태를 가지고 오는 것이이 Id가 필요
+    public ResponseEntity<?> cancelLike(@PathVariable int boardId) {
+        return ResponseEntity.ok(boardService.cancelLike(boardId));
+    }
 }

@@ -34,10 +34,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.cors(); // WebMvcConfig의 CORS 설정을 적용, cors의 정책을 따라가게 함
         http.csrf().disable(); // 서버사이드렌더링에서 쓴다. 요청과 응답에 대한 csrf토큰이 들어가 있어야한다.
         http.authorizeRequests() // 요청들의 인증을 거칠수 있게끔 하는 객체
+                .antMatchers("/board/content", "/board/like/**")
+                .authenticated()
                 .antMatchers("/auth/**", "/board/**", "/boards/**")
                 .permitAll()  // "/auth/**" 이주소(/auth)로 시작하는(오는)것을 무조건 다 통과 시킴
-                .antMatchers("/board/content")
-                .authenticated()
                 .anyRequest()
                 .authenticated() // 없으면 인증이 안된다.
                 .and()
