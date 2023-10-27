@@ -2,7 +2,7 @@ package com.korit.board.controller;
 
 import com.korit.board.aop.annotation.ArgsAop;
 import com.korit.board.aop.annotation.ValidAop;
-import com.korit.board.dto.PrincipalReqDto;
+import com.korit.board.dto.PrincipalRespDto;
 import com.korit.board.dto.UpdatePasswordReqDto;
 import com.korit.board.dto.UpdateProfileImgReqDto;
 import com.korit.board.entity.User;
@@ -31,7 +31,7 @@ public class AccountController {
                 (PrincipalUser) SecurityContextHolder.getContext()
                         .getAuthentication().getPrincipal(); // getPrincipal이 PrincipalUser를 가진다.
         User user = principalUser.getUser();
-        PrincipalReqDto principalReqDto = user.principalReqDto();
+        PrincipalRespDto principalReqDto = user.principalReqDto();
 
         return ResponseEntity.ok(principalReqDto);
     }

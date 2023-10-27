@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class BoardCategoryReqDto {
+public class BoardCategoryRespDto {
     private int boardCategoryId;
     private String boardCategoryName;
     private int boardCount;

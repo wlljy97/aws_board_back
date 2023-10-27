@@ -1,6 +1,6 @@
 package com.korit.board.entity;
 
-import com.korit.board.dto.PrincipalReqDto;
+import com.korit.board.dto.PrincipalRespDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,8 +24,8 @@ public class User {
     private String provider;
 
 
-    public PrincipalReqDto principalReqDto() {
-        return PrincipalReqDto.builder()
+    public PrincipalRespDto principalReqDto() {
+        return PrincipalRespDto.builder()
                 .userId(userId)
                 .email(email)
                 .name(name)

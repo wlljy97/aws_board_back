@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class PrincipalReqDto { // 마이페이지에 필요한 것들
+public class PrincipalRespDto { // 마이페이지에 필요한 것들
     private int userId;
     private String email;
     private String name;

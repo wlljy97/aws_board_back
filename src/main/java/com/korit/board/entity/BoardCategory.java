@@ -1,6 +1,6 @@
 package com.korit.board.entity;
 
-import com.korit.board.dto.BoardCategoryReqDto;
+import com.korit.board.dto.BoardCategoryRespDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,8 +16,8 @@ public class BoardCategory {
     private String boardCategoryName;
     private int boardCount;
 
-    public BoardCategoryReqDto toCategoryDto() {
-        return BoardCategoryReqDto.builder()
+    public BoardCategoryRespDto toCategoryDto() {
+        return BoardCategoryRespDto.builder()
                 .boardCategoryId(boardCategoryId)
                 .boardCategoryName(boardCategoryName)
                 .boardCount(boardCount)

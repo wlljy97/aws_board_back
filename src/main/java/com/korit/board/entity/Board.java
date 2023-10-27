@@ -1,6 +1,6 @@
 package com.korit.board.entity;
 
-import com.korit.board.dto.BoardListReqDto;
+import com.korit.board.dto.BoardListRespDto;
 import com.korit.board.dto.GetBoardRespDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,8 +26,8 @@ public class Board {
     private int boardHitsCount;
     private int boardLikeCount;
 
-    public BoardListReqDto boardListReqDto() {
-        return BoardListReqDto.builder()
+    public BoardListRespDto boardListReqDto() {
+        return BoardListRespDto.builder()
                 .boardId(boardId)
                 .title(boardTitle)
                 .nickname(nickname)
