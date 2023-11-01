@@ -2,6 +2,7 @@ package com.korit.board.controller;
 
 import com.korit.board.aop.annotation.ArgsAop;
 import com.korit.board.aop.annotation.ValidAop;
+import com.korit.board.dto.EditBoardReqDto;
 import com.korit.board.dto.RegisterBoardReqDto;
 import com.korit.board.dto.SearchBoardListReqDto;
 import com.korit.board.dto.WriteBoardReqDto;
@@ -64,13 +65,28 @@ public class BoardController {
         return ResponseEntity.ok(boardService.getLikeState(boardId));
     }
 
-    @PostMapping("/board/like/{boardId}") // 이 게시글에 대한 like상태를 가지고 오는 것이이 Id가 필요
+    @PostMapping("/board/like/{boardId}") // 이 게시글에 대한 like상태를 가지고 오는 것이 Id가 필요
     public ResponseEntity<?> setLike(@PathVariable int boardId) {
         return ResponseEntity.ok(boardService.setLike(boardId));
     }
 
-    @DeleteMapping("/board/like/{boardId}") // 이 게시글에 대한 like상태를 가지고 오는 것이이 Id가 필요
+    @DeleteMapping("/board/like/{boardId}")
     public ResponseEntity<?> cancelLike(@PathVariable int boardId) {
         return ResponseEntity.ok(boardService.cancelLike(boardId));
+    }
+
+    @DeleteMapping("/board/{boardId}")
+    public ResponseEntity<?> deleteBoard(@PathVariable int boardId) {
+        return ResponseEntity.ok(boardService.deleteBoard(boardId));
+    }
+
+    @ArgsAop
+    @ValidAop
+    @PutMapping("/board/{boardId}")
+    public ResponseEntity<?> editBoard(@PathVariable int boardId,
+                                       @Valid @RequestBody EditBoardReqDto editBoardReqDto,
+                                       BindingResult bindingResult) {
+        return ResponseEntity.ok(boardService.editBoard(boardId, editBoardReqDto));
+
     }
 }

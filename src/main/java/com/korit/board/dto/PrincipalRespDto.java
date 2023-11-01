@@ -14,4 +14,5 @@ public class PrincipalRespDto { // 마이페이지에 필요한 것들
     private String profileUrl;
     private String oauth2Id;
     private String provider;
+    private int userPoint;
 }

@@ -46,7 +46,7 @@ public class AuthController {
         return ResponseEntity.ok(authService.signin(signinReqDto));
     }
 
-    @GetMapping("/auth/token/authenticate")
+    @GetMapping("/auth/token/authenticate") // token 조회
     public ResponseEntity<?> authenticate(@RequestHeader(value = "Authorization") String token) {
 
         return ResponseEntity.ok(true);
